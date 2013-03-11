@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartoes" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="287" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="e059fdcd-5e9f-4cb9-9293-094490ea67fb">
+	<property name="ireport.zoom" value="2.143588810000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="storyType" class="java.lang.String"/>
+	<field name="storyId" class="java.lang.Integer"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="estimatedPoints" class="java.lang.Integer"/>
+	<field name="businessValue" class="java.lang.Integer"/>
+	<field name="storySize" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="135" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="14f379d4-a550-4554-8010-1b744f7135ad" stretchType="RelativeToBandHeight" mode="Transparent" x="5" y="2" width="275" height="130"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement uuid="39574c74-da5c-4fab-a3e3-669633e5d887" x="6" y="4" width="273" height="20"/>
+				<box leftPadding="3">
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{storyType} + " #" + $F{storyId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72e869c7-dcfc-40ba-a229-4c39e6200139" x="6" y="114" width="234" height="16"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Business Value: " + ($F{businessValue} != null ? $F{businessValue} : "?")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a883b44d-0066-423f-9635-372669d85bee" x="6" y="98" width="234" height="16"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Estimated Points: " + ($F{estimatedPoints} != null ? $F{estimatedPoints} : "?")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ae838070-eecb-459f-ab08-75d085a60f3e" x="6" y="25" width="273" height="72"/>
+				<box leftPadding="3">
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans Mono" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d4ebc347-95dd-4a17-8885-4a8ee59f5cc0" x="240" y="98" width="39" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{storySize}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
