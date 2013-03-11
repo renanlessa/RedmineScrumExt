@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="./../templates/template-site.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="head">
+        <script type="text/javascript">
+            function exportChart() {  
+                $('.output').empty().append(chart.exportAsImage());  
+                exportDialog.show();  
+                $('.ui-widget-overlay').hide();
+                return false;
+            } 
+        </script>
+    </ui:define>    
+    
+    <ui:define name="contentTitle">
+        Gerar Gráfico BurnDown
+    </ui:define>   
+    
+    <ui:define name="content">
+        <h:form id="form-burndown">
+            <p:panel>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Projeto: " />  
+                    <p:selectOneMenu value="#{burndownMBean.projectId}">
+                        <f:selectItem itemLabel="Selecione o projeto..." itemValue="" />  
+                        <f:selectItems value="#{burndownMBean.listProjects}" var="project" itemLabel="#{project.name}" itemValue="#{project.id}"/>  
+                        <p:ajax update="cmbVersions" listener="#{burndownMBean.loadVersions}" />  
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Versão: " />  
+                    <p:selectOneMenu value="#{burndownMBean.versionId}" id="cmbVersions">  
+                        <f:selectItem itemLabel="Selecione a versão..." itemValue="" />  
+                        <f:selectItems value="#{burndownMBean.listVersions}" var="version" itemLabel="#{version.name}" itemValue="#{version.id}"/>  
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Período: " />  
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:calendar value="#{burndownMBean.dataInicial}" id="dataInicial" showOn="button" /> 
+                        <h:outputText value="até" />
+                        <p:calendar value="#{burndownMBean.dataFinal}" id="dataFinal" showOn="button" /> 
+                    </h:panelGrid>
+                </h:panelGrid>
+                
+                <f:facet name="footer">
+                    <p:commandButton value="Gerar" icon="ui-icon-bookmark" update="chartPanel" ajax="true" action="#{burndownMBean.generateBurndownChart()}" />  
+                </f:facet>
+            </p:panel>
+            
+            <br />
+            
+            <p:outputPanel id="chartPanel">
+                <p:panel id="burndown" style="width: 920px; margin: 0 auto;" rendered="#{burndownMBean.renderChart}">
+                    <p:lineChart id="burndownChart" value="#{burndownMBean.burnDownChartModel}"  
+                                 widgetVar="chart" legendPosition="w" title="Gráfico BurnDown" showMarkers="false" yaxisLabel="Points" 
+                                 xaxisLabel="Data" xaxisAngle="-45" style="width: 900px; height: 500px" /> 
+
+                    <p:dialog widgetVar="exportDialog" showEffect="fade" modal="true" header="Salve esta imagem">  
+                        <p:outputPanel id="output" styleClass="output" layout="block" style="width: 920px; height: 520px"/>  
+                    </p:dialog>
+
+                    <f:facet name="footer">
+                        <p:commandButton type="button" ajax="false" value="Exportar" icon="ui-icon-extlink" onclick="exportChart();"/>
+                    </f:facet>
+                </p:panel>       
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

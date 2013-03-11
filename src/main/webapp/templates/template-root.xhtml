@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
+        <title>Redmine Scrum Extension</title>
+        <ui:insert name="head"></ui:insert>        
+    </h:head>
+
+    <h:body>
+        <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/> 
+        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">  
+            Loading <p:graphicImage value="../resources/img/loading.gif" />  
+        </p:dialog>
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" size="35">
+                <ui:insert name="top"></ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="185">
+                <ui:insert name="menu"></ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <p:panel >
+                    <f:facet name="header">
+                        <ui:insert name="contentTitle"></ui:insert>
+                    </f:facet>
+                    <ui:insert name="content"></ui:insert>
+                </p:panel>
+            </p:layoutUnit>
+            
+        </p:layout>        
+    </h:body>
+
+</html>

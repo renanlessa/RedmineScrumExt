@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="./templates/template-login.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+    <ui:define name="content">
+        <p:panel header="Login" footer="Redmine Scrum Extension" styleClass="panelLogin">
+            <h:form id="form-redmine">
+                <h:panelGrid columns="2">  
+                    <h:outputText value="Usuário: " />  
+                    <p:inputText id="username" value="#{sessionMBean.username}" required="true" styleClass="inputLogin" />
+
+                    <h:outputText value="Senha: " />  
+                    <p:password id="password" value="#{sessionMBean.password}" required="true" styleClass="inputLogin" />
+                    
+                    <h:outputText value="Host: " />  
+                    <p:selectOneMenu value="#{sessionMBean.redmineURL}" effect="fade" styleClass="inputLogin">  
+                        <f:selectItem itemLabel="Selecione o Host" itemValue="" />  
+                        <f:selectItems value="#{sessionMBean.redmineURLs}" var="host" itemLabel="#{host}" itemValue="#{host}"/>  
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            
+                <p:commandButton id="entrar" ajax="false" value="Entrar" action="#{sessionMBean.login}" 
+                                 icon="ui-icon-carat-1-e" iconPos="right" styleClass="botao" /> 
+                <br clear="both" />
+            </h:form>
+        </p:panel>
+        <p:messages id="messages" />
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="./template-root.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="top">
+        Redmine Scrum Extension 
+        
+        <div id="header-user-data">
+            <h:outputText value="#{sessionMBean.user.fullName}" /> 
+            - <p:commandLink value="Sair" action="#{sessionMBean.logout()}" />
+        </div>
+    </ui:define>
+
+    <ui:define name="menu">
+        <h:form id="form-menu">
+            <p:menu>  
+                <p:submenu label="Scrum">  
+                    <p:menuitem value="Cartões" outcome="cartoes" icon="ui-icon-document" />  
+                    <p:menuitem value="Gráfico Burndown" outcome="burndown" icon="ui-icon-bookmark"/>  
+                </p:submenu>
+            </p:menu> 
+        </h:form>
+    </ui:define>
+
+</ui:composition>
