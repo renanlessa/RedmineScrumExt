@@ -67,15 +67,32 @@
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>5.0.0</version>
-        </dependency>   
+        </dependency>
         
         <!-- Joda Time -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.2</version>
-        </dependency>                   
-  
+        </dependency>
+        <!-- ObjectLab Holiday Calculation - Usado para feriados -->
+        <dependency>
+            <groupId>net.objectlab.kit</groupId>
+            <artifactId>datecalc-common</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.objectlab.kit</groupId>
+            <artifactId>datecalc-joda</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <!-- Jollyday - Usado para feriados -->
+        <dependency>
+            <groupId>de.jollyday</groupId>
+            <artifactId>jollyday</artifactId>
+            <version>0.4.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
