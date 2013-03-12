@@ -7,7 +7,6 @@ import br.com.voiza.rse.service.VersionServiceBean;
 import br.com.voiza.rse.util.DateUtil;
 import com.taskadapter.redmineapi.bean.Project;
 import com.taskadapter.redmineapi.bean.Version;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
