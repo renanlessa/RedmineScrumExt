@@ -2,8 +2,11 @@ package br.com.voiza.rse.mbean;
 
 import br.com.voiza.rse.service.RedmineServiceBean;
 import com.taskadapter.redmineapi.bean.User;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -68,6 +71,26 @@ public class SessionMBean extends SuperMBean {
         hosts.add("http://projetos.voiza.com.br");
         hosts.add("http://redmine.voiza.com.br");
         return hosts;
+    }
+    
+    public String getApplicationVersion() {
+        String version = "";
+
+        try {
+            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
+            if(input != null){
+
+                Properties properties = new Properties();
+                properties.load(input);
+                version = properties.getProperty("version");
+
+                input.close();
+            }
+
+        } catch (IOException ex) {
+        }
+
+        return version;
     }
     
     public String getUsername() {

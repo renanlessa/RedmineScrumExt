@@ -8,7 +8,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
     
     <ui:define name="content">
-        <p:panel header="Login" footer="Redmine Scrum Extension" styleClass="panelLogin">
+        <p:panel header="Login" footer="Redmine Scrum Extension - #{sessionMBean.applicationVersion}" styleClass="panelLogin" id="panelLogin">
             <h:form id="form-redmine">
                 <h:panelGrid columns="2">  
                     <h:outputText value="Usuário: " />  
@@ -19,7 +19,6 @@
                     
                     <h:outputText value="Host: " />  
                     <p:selectOneMenu value="#{sessionMBean.redmineURL}" effect="fade" styleClass="inputLogin">  
-                        <f:selectItem itemLabel="Selecione o Host" itemValue="" />  
                         <f:selectItems value="#{sessionMBean.redmineURLs}" var="host" itemLabel="#{host}" itemValue="#{host}"/>  
                     </p:selectOneMenu>
                 </h:panelGrid>

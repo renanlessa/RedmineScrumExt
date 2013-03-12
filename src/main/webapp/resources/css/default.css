@@ -33,6 +33,11 @@ a:link:hover, a:visited:hover  {
     margin: 0 auto;
 }
 
+.panelLogin div#panelLogin_footer {
+    font-size: 10px;
+    text-align: center;
+}
+
 .inputLogin {
     width: 200px;
 }
