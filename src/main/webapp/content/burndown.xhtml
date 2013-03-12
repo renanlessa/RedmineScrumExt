@@ -40,16 +40,16 @@
 
                     <h:outputText value="Período: " />  
                     <h:panelGrid columns="3">
-                        <p:calendar value="#{burndownMBean.dataInicial}" id="dataInicial" showOn="button">
+                        <p:calendar value="#{burndownMBean.dataInicial}" id="dataInicial" effect="fadeIn">
                             <p:ajax update="dias" listener="#{burndownMBean.calculaQuantidadeDias}" process="@this,dataFinal" event="dateSelect"/>
                         </p:calendar> 
                         <h:outputText value="até" />
-                        <p:calendar value="#{burndownMBean.dataFinal}" id="dataFinal" showOn="button">
+                        <p:calendar value="#{burndownMBean.dataFinal}" id="dataFinal" effect="fadeIn">
                             <p:ajax update="dias" listener="#{burndownMBean.calculaQuantidadeDias}" process="@this,dataInicial" event="dateSelect" />
                         </p:calendar> 
                     </h:panelGrid>
                     
-                    <h:outputText value="Dias: " />  
+                    <h:outputText value="Dias previstos: " />  
                     <p:inputText value="#{burndownMBean.dias}" id="dias" />
                 </h:panelGrid>
                 
