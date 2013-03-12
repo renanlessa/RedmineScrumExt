@@ -3,3 +3,4 @@
 3. Na impressão das estórias apresentar parte da descrição até o limite do cartão e o restante fica truncado, assim teríamos em muitas estórias a descrição completa.
 4. Sugiro termos um projeto no redmine para cadastrarmos estórias de melhoria para esta solução.
 5. Listagem de projetos obedecer hierarquia do Redmine (utilizar atributo parentId de Project)
+6. No gráfico burndown, levar em consideração a possibilidade de ser aumentada a quantidade de pontos durante o projeto.

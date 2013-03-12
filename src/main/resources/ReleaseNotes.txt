@@ -1,8 +1,10 @@
-Version 1.1 - XX/03/2013
+Version 1.1 - 12/03/2013
  - Ordenação da listagem de projetos
  - Ordenação da listagem de Versões
  - Alteração no comportamento da tela de gerar cartões para renderizar a listagem somente após a seleção da versão
  - Adicionada feature para geração de gráfico burndown
+ - Possibilidade de selecionar a qual host conectar (projetos ou redmine)
+ - Adicionao recurso de BuildNumber para melhor identificação da versão rodando em produção
 
 Version 1.0 - 11/03/2013
  - Geração de Cartões
