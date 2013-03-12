@@ -1,0 +1,8 @@
+Version 1.1 - XX/03/2013
+ - Ordenação da listagem de projetos
+ - Ordenação da listagem de Versões
+ - Alteração no comportamento da tela de gerar cartões para renderizar a listagem somente após a seleção da versão
+ - Adicionada feature para geração de gráfico burndown
+
+Version 1.0 - 11/03/2013
+ - Geração de Cartões
