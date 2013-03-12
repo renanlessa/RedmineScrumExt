@@ -29,7 +29,7 @@
                     <p:selectOneMenu value="#{burndownMBean.projectId}">
                         <f:selectItem itemLabel="Selecione o projeto..." itemValue="" />  
                         <f:selectItems value="#{burndownMBean.listProjects}" var="project" itemLabel="#{project.name}" itemValue="#{project.id}"/>  
-                        <p:ajax update="cmbVersions" listener="#{burndownMBean.loadVersions}" />  
+                        <p:ajax update="cmbVersions" listener="#{burndownMBean.loadVersions}" />
                     </p:selectOneMenu>
 
                     <h:outputText value="Versão: " />  
@@ -39,11 +39,18 @@
                     </p:selectOneMenu>
 
                     <h:outputText value="Período: " />  
-                    <h:panelGrid columns="3" cellpadding="5">
-                        <p:calendar value="#{burndownMBean.dataInicial}" id="dataInicial" showOn="button" /> 
+                    <h:panelGrid columns="3">
+                        <p:calendar value="#{burndownMBean.dataInicial}" id="dataInicial" showOn="button">
+                            <p:ajax update="dias" listener="#{burndownMBean.calculaQuantidadeDias}" process="@this,dataFinal" event="dateSelect"/>
+                        </p:calendar> 
                         <h:outputText value="até" />
-                        <p:calendar value="#{burndownMBean.dataFinal}" id="dataFinal" showOn="button" /> 
+                        <p:calendar value="#{burndownMBean.dataFinal}" id="dataFinal" showOn="button">
+                            <p:ajax update="dias" listener="#{burndownMBean.calculaQuantidadeDias}" process="@this,dataInicial" event="dateSelect" />
+                        </p:calendar> 
                     </h:panelGrid>
+                    
+                    <h:outputText value="Dias: " />  
+                    <p:inputText value="#{burndownMBean.dias}" id="dias" />
                 </h:panelGrid>
                 
                 <f:facet name="footer">

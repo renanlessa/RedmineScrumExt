@@ -53,6 +53,8 @@ public class BurndownMBean {
     
     private Date dataFinal;
     
+    private Integer dias;
+    
     private static final Logger LOGGER = Logger.getLogger(BurndownMBean.class.getName());
     
     @PostConstruct
@@ -74,12 +76,13 @@ public class BurndownMBean {
         listVersions = versionServiceBean.loadVersions(projectId);
     }
     
+    /**
+     * Popula o modelo usado para geração do gráfico burndown
+     */
     public void generateBurndownChart() {
         List<IssueDTO> listIssues = issueServiceBean.loadIssues(projectId, versionId);
         Integer totalPoints = issueServiceBean.somaPontuacao(listIssues);
-        // TODO Corrigir o método que obtém a diferença em dias para não considerar os finais de semana
-        Integer numeroDias = DateUtil.differenceInDays(dataInicial, dataFinal);
-        Double mediaEstimada = (totalPoints.doubleValue() / (numeroDias - 2)); 
+        Double mediaEstimada = (totalPoints.doubleValue() / dias);
         Double previsto = totalPoints.doubleValue();
         Integer realizado = totalPoints;
         
@@ -90,23 +93,30 @@ public class BurndownMBean {
         
         LineChartSeries serieRealizado = new LineChartSeries();  
         serieRealizado.setLabel("Realizado");  
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
+
         Calendar data = Calendar.getInstance();
         data.setTime(dataInicial);
+        Integer iteracoes = 0;
         do {
-            if (!DateUtil.isWeekend(data)) {
-                seriePrevisto.set(sdf.format(data.getTime()), previsto);
+            if (!DateUtil.isBusinessDay(data)) {
+                String diaMes = DateUtil.DIA_MES.format(data.getTime());
+                
+                if (iteracoes > dias) {
+                    previsto = 0d;
+                }
+                seriePrevisto.set(diaMes, previsto);
                 previsto -= mediaEstimada;
                 
-                boolean realizacaoNoDia = false;
+                boolean realizadoNoDia = false;
                 for (IssueDTO issueDTO : listIssues) {
                     if (data.getTime().equals(issueDTO.getOriginal().getDueDate())) {
                         realizado -= issueDTO.getPointsRealizado();
-                        realizacaoNoDia = true;
+                        realizadoNoDia = true;
                     }
                 }
-                serieRealizado.set(sdf.format(data.getTime()), realizacaoNoDia || realizado == totalPoints ? realizado : null);
+                serieRealizado.set(diaMes, (realizadoNoDia || realizado == totalPoints) ? realizado : null);
+                
+                iteracoes++;
             }
             data.add(Calendar.DAY_OF_MONTH, 1);
         } while(!data.getTime().after(dataFinal));
@@ -115,6 +125,12 @@ public class BurndownMBean {
         burnDownChartModel.addSeries(serieRealizado);
         
         renderChart = true;
+    }
+    
+    public void calculaQuantidadeDias() {
+        if (dataInicial != null && dataFinal != null) {
+            dias = DateUtil.businessDaysInPeriod(dataInicial, dataFinal);
+        }
     }
 
     public List<Project> getListProjects() {
@@ -179,6 +195,14 @@ public class BurndownMBean {
 
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public Integer getDias() {
+        return dias;
+    }
+
+    public void setDias(Integer dias) {
+        this.dias = dias;
     }
     
 }
