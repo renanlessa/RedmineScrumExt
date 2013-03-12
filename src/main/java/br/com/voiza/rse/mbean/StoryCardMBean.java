@@ -55,6 +55,8 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
     
     private Integer totalPoints;
     
+    private boolean renderListagem;
+    
     private static final Logger LOGGER = Logger.getLogger(StoryCardMBean.class.getName());
 
     @PostConstruct
@@ -83,6 +85,7 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
         listIssues.clear();
         listIssues = issueServiceBean.loadIssues(projectId, versionId);
         totalPoints = issueServiceBean.somaPontuacao(listIssues);
+        renderListagem = !listIssues.isEmpty();
     }
     
     /**
@@ -166,6 +169,14 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
 
     public void setTotalPoints(Integer totalPoints) {
         this.totalPoints = totalPoints;
+    }
+
+    public boolean isRenderListagem() {
+        return renderListagem;
+    }
+
+    public void setRenderListagem(boolean renderListagem) {
+        this.renderListagem = renderListagem;
     }
     
 }

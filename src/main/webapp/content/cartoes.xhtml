@@ -25,44 +25,45 @@
                 <p:selectOneMenu value="#{storyCardMBean.versionId}" id="cmbVersions">  
                     <f:selectItem itemLabel="Selecione a versão..." itemValue="" />  
                     <f:selectItems value="#{storyCardMBean.listVersions}" var="version" itemLabel="#{version.name}" itemValue="#{version.id}"/>  
-                    <p:ajax update="issues" listener="#{storyCardMBean.loadIssues()}" />  
+                    <p:ajax update="list" listener="#{storyCardMBean.loadIssues()}" />  
                 </p:selectOneMenu>
             </h:panelGrid>
+            <p:outputPanel id="list">
+                <p:dataTable value="#{storyCardMBean.listIssues}" rowKey="#{issueDTO.original.id}" selection="#{storyCardMBean.selectedIssues}"
+                             id="issues" var="issueDTO" sortBy="#{issueDTO.businessValue}" rendered="#{storyCardMBean.renderListagem}">
 
-            <p:dataTable value="#{storyCardMBean.listIssues}" rowKey="#{issueDTO.original.id}" selection="#{storyCardMBean.selectedIssues}"
-                         id="issues" var="issueDTO" sortBy="#{issueDTO.businessValue}">
-                
-                <f:facet name="header">  
-                    Tarefas
-                </f:facet>  
-                
-                <p:column selectionMode="multiple" />
+                    <f:facet name="header">  
+                        Tarefas
+                    </f:facet>  
 
-                <p:column headerText="#" sortBy="#{issueDTO.original.id}">  
-                    <h:outputText value="#{issueDTO.original.id}" />  
-                </p:column>  
+                    <p:column selectionMode="multiple" />
 
-                <p:column headerText="Business Value" sortBy="#{issueDTO.businessValue}">
-                    <h:outputText value="#{issueDTO.businessValue}" />  
-                </p:column>  
+                    <p:column headerText="#" sortBy="#{issueDTO.original.id}">  
+                        <h:outputText value="#{issueDTO.original.id}" />  
+                    </p:column>  
 
-                <p:column headerText="Points">  
-                    <h:outputText value="#{issueDTO.pointsRealizado != null ? issueDTO.pointsRealizado : '?'}" />  
-                </p:column>  
+                    <p:column headerText="Business Value" sortBy="#{issueDTO.businessValue}">
+                        <h:outputText value="#{issueDTO.businessValue}" />  
+                    </p:column>  
 
-                <p:column headerText="Título">  
-                    <h:outputText value="#{issueDTO.original.subject}" />  
-                </p:column>  
+                    <p:column headerText="Points">  
+                        <h:outputText value="#{issueDTO.pointsRealizado != null ? issueDTO.pointsRealizado : '?'}" />  
+                    </p:column>  
 
-                <p:column headerText="Story Size">  
-                    <h:outputText value="#{issueDTO.storySize}" />  
-                </p:column>
+                    <p:column headerText="Título">  
+                        <h:outputText value="#{issueDTO.original.subject}" />  
+                    </p:column>  
 
-                <f:facet name="footer">  
-                    Total de pontos estimado: #{storyCardMBean.totalPoints}
-                    <p:commandButton value="Imprimir" icon="ui-icon-print" action="#{storyCardMBean.printPDF()}" ajax="false" />  
-                </f:facet>                
-            </p:dataTable>            
+                    <p:column headerText="Story Size">  
+                        <h:outputText value="#{issueDTO.storySize}" />  
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        Total de pontos estimado: #{storyCardMBean.totalPoints}
+                        <p:commandButton value="Imprimir" icon="ui-icon-print" action="#{storyCardMBean.printPDF()}" ajax="false" />  
+                    </f:facet>                
+                </p:dataTable>
+            </p:outputPanel>
         </h:form>
     </ui:define>
 
