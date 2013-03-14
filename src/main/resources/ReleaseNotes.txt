@@ -1,3 +1,10 @@
+Version 1.2 - 14/03/2013
+ - Fix: Corrigido burndown para considerar como realizado somente se a data de finalização for a mesma da coluna do gráfico E se a situação for DONE.
+ - Adicionadas classes SessionUtil e PropertiesUtil para carregar as informações do arquivo de properties.
+ - Adicionado filtro por Tipo de Tarefa na geração de cartões.
+ - Adicionado botão para gerar a listagem, possibilitando ao usuário controlar quando deseja realizar a listagem de Issues
+ - Alterado texto e ícon do botão Imprimir para Exportar.
+
 Version 1.1 - 12/03/2013
  - Ordenação da listagem de projetos
  - Ordenação da listagem de Versões

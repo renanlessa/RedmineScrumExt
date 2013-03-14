@@ -29,26 +29,12 @@ public class ProjectServiceBean {
      */
     public List<Project> loadProjects() {
         try {
-            List<Project> list = redmineService.getRedmineManager().getProjects();
-            ordenaListaProject(list);
-            return list;
+            return redmineService.getRedmineManager().getProjects();
         } catch (RedmineException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
-    /**
-     * Ordena a lista de Projects pelo nome
-     * @param list 
-     */
-    private void ordenaListaProject(List<Project> list) {
-        Collections.sort(list, new Comparator<Project>() {
-            @Override
-            public int compare(Project p1, Project p2) {
-                return p1.getName().compareTo(p2.getName());
-            }
-        });
-    }    
+ 
     
 }

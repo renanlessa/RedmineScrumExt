@@ -5,13 +5,13 @@ import br.com.voiza.rse.service.IssueServiceBean;
 import br.com.voiza.rse.service.ProjectServiceBean;
 import br.com.voiza.rse.service.VersionServiceBean;
 import br.com.voiza.rse.util.DateUtil;
+import br.com.voiza.rse.util.SessionUtil;
 import com.taskadapter.redmineapi.bean.Project;
 import com.taskadapter.redmineapi.bean.Version;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -54,8 +54,6 @@ public class BurndownMBean {
     
     private Integer dias;
     
-    private static final Logger LOGGER = Logger.getLogger(BurndownMBean.class.getName());
-    
     @PostConstruct
     public void init() {
         loadProjects();
@@ -79,7 +77,7 @@ public class BurndownMBean {
      * Popula o modelo usado para geração do gráfico burndown
      */
     public void generateBurndownChart() {
-        List<IssueDTO> listIssues = issueServiceBean.loadIssues(projectId, versionId);
+        List<IssueDTO> listIssues = issueServiceBean.loadIssues(projectId, versionId, null);
         Integer totalPoints = issueServiceBean.somaPontuacao(listIssues);
         Double mediaEstimada = (totalPoints.doubleValue() / dias);
         Double previsto = totalPoints.doubleValue();
@@ -108,7 +106,11 @@ public class BurndownMBean {
                 
                 boolean realizadoNoDia = false;
                 for (IssueDTO issueDTO : listIssues) {
-                    if (data.getTime().equals(issueDTO.getOriginal().getDueDate())) {
+                    
+                    Integer idDone = SessionUtil.getPropertiesFromSession().getIdDone();
+                    
+                    if (issueDTO.getOriginal().getStatusId().equals(idDone) 
+                            && data.getTime().equals(issueDTO.getOriginal().getDueDate())) {
                         realizado -= issueDTO.getPointsRealizado();
                         realizadoNoDia = true;
                     }

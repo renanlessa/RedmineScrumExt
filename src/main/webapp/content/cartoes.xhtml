@@ -13,21 +13,34 @@
     
     <ui:define name="content">
         <h:form id="form-cartoes">
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputText value="Projeto: " />  
-                <p:selectOneMenu value="#{storyCardMBean.projectId}">
-                    <f:selectItem itemLabel="Selecione o projeto..." itemValue="" />  
-                    <f:selectItems value="#{storyCardMBean.listProjects}" var="project" itemLabel="#{project.name}" itemValue="#{project.id}"/>  
-                    <p:ajax update="cmbVersions" listener="#{storyCardMBean.loadVersions}" />  
-                </p:selectOneMenu>
+            <p:panel>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Projeto: " />  
+                    <p:selectOneMenu value="#{storyCardMBean.projectId}">
+                        <f:selectItem itemLabel="Selecione o projeto..." itemValue="" />  
+                        <f:selectItems value="#{storyCardMBean.listProjects}" var="project" itemLabel="#{project.name}" itemValue="#{project.id}"/>  
+                        <p:ajax update="cmbVersions" listener="#{storyCardMBean.loadVersions}" />  
+                    </p:selectOneMenu>
 
-                <h:outputText value="Versão: " />  
-                <p:selectOneMenu value="#{storyCardMBean.versionId}" id="cmbVersions">  
-                    <f:selectItem itemLabel="Selecione a versão..." itemValue="" />  
-                    <f:selectItems value="#{storyCardMBean.listVersions}" var="version" itemLabel="#{version.name}" itemValue="#{version.id}"/>  
-                    <p:ajax update="list" listener="#{storyCardMBean.loadIssues()}" />  
-                </p:selectOneMenu>
-            </h:panelGrid>
+                    <h:outputText value="Versão: " />  
+                    <p:selectOneMenu value="#{storyCardMBean.versionId}" id="cmbVersions">  
+                        <f:selectItem itemLabel="Selecione a versão..." itemValue="" />  
+                        <f:selectItems value="#{storyCardMBean.listVersions}" var="version" itemLabel="#{version.name}" itemValue="#{version.id}"/>  
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Tipo: " />  
+                    <p:selectManyCheckbox value="#{storyCardMBean.selectedTrackers}" layout="pageDirection">  
+                        <f:selectItems value="#{storyCardMBean.listTrackers}" var="tracker" itemLabel="#{tracker.name}" itemValue="#{tracker.id}" />  
+                    </p:selectManyCheckbox>  
+                </h:panelGrid>
+                
+                <f:facet name="footer">
+                    <p:commandButton value="Listar" icon="ui-icon-search" update="list" ajax="true" action="#{storyCardMBean.loadIssues()}" />  
+                </f:facet>
+            </p:panel>
+            
+            <p:messages />
+            
             <p:outputPanel id="list">
                 <p:dataTable value="#{storyCardMBean.listIssues}" rowKey="#{issueDTO.original.id}" selection="#{storyCardMBean.selectedIssues}"
                              id="issues" var="issueDTO" sortBy="#{issueDTO.businessValue}" rendered="#{storyCardMBean.renderListagem}">
@@ -60,7 +73,7 @@
 
                     <f:facet name="footer">  
                         Total de pontos estimado: #{storyCardMBean.totalPoints}
-                        <p:commandButton value="Imprimir" icon="ui-icon-print" action="#{storyCardMBean.printPDF()}" ajax="false" />  
+                        <p:commandButton value="Exportar" icon="ui-icon-disk" action="#{storyCardMBean.printPDF()}" ajax="false" />  
                     </f:facet>                
                 </p:dataTable>
             </p:outputPanel>

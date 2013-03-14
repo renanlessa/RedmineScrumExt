@@ -1,18 +1,16 @@
 package br.com.voiza.rse.mbean;
 
 import br.com.voiza.rse.service.RedmineServiceBean;
+import br.com.voiza.rse.util.SessionUtil;
 import com.taskadapter.redmineapi.bean.User;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -24,7 +22,6 @@ public class SessionMBean extends SuperMBean {
     
     @EJB
     private RedmineServiceBean redmineServiceBean;
-    private static final String USER_SESSION_ATTRIBUTE = "user";
     
     private String username;
     private String password;
@@ -33,13 +30,19 @@ public class SessionMBean extends SuperMBean {
     
     private String theme = "ui-lightness";
     
+    
     private static final Logger LOGGER = Logger.getLogger(SessionMBean.class.getName());
-       
+
+    @PostConstruct
+    public void init() {
+        SessionUtil.addPropertiesToSession();
+    }
+    
     public String login() {
         try {
             user = redmineServiceBean.connectWithRedmine(username, password, redmineURL);
             
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(USER_SESSION_ATTRIBUTE, user);
+            SessionUtil.addUserToSession(user);
             
             return SUCCESS;
         } catch (Exception ex) {
@@ -47,11 +50,19 @@ public class SessionMBean extends SuperMBean {
             return FAIL;
         }        
     }
+
+    /**
+     * Retorna o ApplicationVersion presente no arquivo de properties que foi carregado na sessão do usuário.
+     * @return 
+     */
+    public String getApplicationVersion() {
+        return SessionUtil.getPropertiesFromSession().getApplicationVersion();
+    }
     
     public String logout() {
         user = null;
         
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(USER_SESSION_ATTRIBUTE);
+        SessionUtil.removeUserFromSession();
         
         return LOGOUT;
     }
@@ -71,26 +82,6 @@ public class SessionMBean extends SuperMBean {
         hosts.add("http://projetos.voiza.com.br");
         hosts.add("http://redmine.voiza.com.br");
         return hosts;
-    }
-    
-    public String getApplicationVersion() {
-        String version = "";
-
-        try {
-            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
-            if(input != null){
-
-                Properties properties = new Properties();
-                properties.load(input);
-                version = properties.getProperty("version");
-
-                input.close();
-            }
-
-        } catch (IOException ex) {
-        }
-
-        return version;
     }
     
     public String getUsername() {
@@ -124,5 +115,5 @@ public class SessionMBean extends SuperMBean {
     public void setRedmineURL(String redmineURL) {
         this.redmineURL = redmineURL;
     }
-    
+
 }

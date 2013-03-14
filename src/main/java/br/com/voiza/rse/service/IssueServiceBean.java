@@ -5,6 +5,7 @@ import br.com.voiza.rse.mbean.StoryCardMBean;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.CustomField;
 import com.taskadapter.redmineapi.bean.Issue;
+import com.taskadapter.redmineapi.bean.Tracker;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,15 @@ public class IssueServiceBean {
      * @param versionId Versão à qual se deseja realizar a consulta
      * @return List de IssueDTO contendo as issues localizadas
      */
-    public List<IssueDTO> loadIssues(Integer projectId, Integer versionId) {
+    /**
+     * Busca as issues de uma versão de um determinado projeto
+     * 
+     * @param projectId Projeto ao qual se deseja realizar a consulta
+     * @param versionId Versão à qual se deseja realizar a consulta
+     * @param trackers Lista de tipos para filtrar. Caso seja null, carregará Story e Technical Story
+     * @return List de IssueDTO contendo as issues localizadas
+     */
+    public List<IssueDTO> loadIssues(Integer projectId, Integer versionId, List<String> trackers) {
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("project_id", projectId.toString());
@@ -47,13 +56,19 @@ public class IssueServiceBean {
             params.put("fixed_version_id", versionId.toString());
             
             List<Issue> list = new ArrayList<Issue>();
-            params.put("tracker_id", ID_TRACKER_STORY);
-            // Primeiro busca todas as issues que são Story
-            list.addAll(redmineService.getRedmineManager().getIssues(params));
-
-            params.put("tracker_id", ID_TRACKER_TECHNICAL_STORY);
-            // Agora busca todas as issues que são Technical Story
-            list.addAll(redmineService.getRedmineManager().getIssues(params));
+            
+            if (trackers != null) {
+                for (String trackerId : trackers) {
+                    params.put("tracker_id", trackerId);
+                    list.addAll(redmineService.getRedmineManager().getIssues(params));
+                }
+            } else {
+                params.put("tracker_id", ID_TRACKER_STORY);
+                list.addAll(redmineService.getRedmineManager().getIssues(params));
+                
+                params.put("tracker_id", ID_TRACKER_TECHNICAL_STORY);
+                list.addAll(redmineService.getRedmineManager().getIssues(params));
+            }
             
             List<IssueDTO> listIssues = montaListaIssueDTO(list);
             return listIssues;
