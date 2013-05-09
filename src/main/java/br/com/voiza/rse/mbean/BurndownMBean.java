@@ -78,10 +78,10 @@ public class BurndownMBean {
      */
     public void generateBurndownChart() {
         List<IssueDTO> listIssues = issueServiceBean.loadIssues(projectId, versionId, null);
-        Integer totalPoints = issueServiceBean.somaPontuacao(listIssues);
-        Double mediaEstimada = (totalPoints.doubleValue() / dias);
-        Double previsto = totalPoints.doubleValue();
-        Integer realizado = totalPoints;
+        Integer initialPoints = issueServiceBean.somaPontuacao(listIssues, dataInicial);
+        Double mediaEstimada = (initialPoints.doubleValue() / dias);
+        Double previsto = initialPoints.doubleValue();
+        Integer realizado = initialPoints;
         
         burnDownChartModel = new CartesianChartModel();  
         
@@ -93,12 +93,14 @@ public class BurndownMBean {
 
         Calendar data = Calendar.getInstance();
         data.setTime(dataInicial);
-        Integer iteracoes = 0;
+        Integer iteracao = 0;
+        Integer idDone = SessionUtil.getPropertiesFromSession().getIdDone();
+        
         do {
             if (!DateUtil.isBusinessDay(data)) {
                 String diaMes = DateUtil.DIA_MES.format(data.getTime());
                 
-                if (iteracoes > dias) {
+                if (iteracao > dias) {
                     previsto = 0d;
                 }
                 seriePrevisto.set(diaMes, previsto);
@@ -106,18 +108,15 @@ public class BurndownMBean {
                 
                 boolean realizadoNoDia = false;
                 for (IssueDTO issueDTO : listIssues) {
-                    
-                    Integer idDone = SessionUtil.getPropertiesFromSession().getIdDone();
-                    
                     if (issueDTO.getOriginal().getStatusId().equals(idDone) 
                             && data.getTime().equals(issueDTO.getOriginal().getDueDate())) {
                         realizado -= issueDTO.getPointsRealizado();
                         realizadoNoDia = true;
                     }
                 }
-                serieRealizado.set(diaMes, (realizadoNoDia || realizado == totalPoints) ? realizado : null);
+                serieRealizado.set(diaMes, (realizadoNoDia || realizado == initialPoints) ? realizado : null);
                 
-                iteracoes++;
+                iteracao++;
             }
             data.add(Calendar.DAY_OF_MONTH, 1);
         } while(!data.getTime().after(dataFinal));

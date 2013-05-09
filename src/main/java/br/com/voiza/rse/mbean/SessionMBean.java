@@ -79,7 +79,7 @@ public class SessionMBean extends SuperMBean {
     
     public List<String> getRedmineURLs() {
         List<String> hosts = new ArrayList<String>();
-        hosts.add("http://projetos.voiza.com.br");
+        hosts.add("https://projetos.voiza.com.br");
         hosts.add("http://redmine.voiza.com.br");
         return hosts;
     }

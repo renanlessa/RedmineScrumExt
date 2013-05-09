@@ -5,9 +5,9 @@ import br.com.voiza.rse.mbean.StoryCardMBean;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.CustomField;
 import com.taskadapter.redmineapi.bean.Issue;
-import com.taskadapter.redmineapi.bean.Tracker;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,22 +93,27 @@ public class IssueServiceBean {
         IssueDTO issueDTO;
 
         for (Issue issue : list) {
-            issueDTO = new IssueDTO();
-            issueDTO.setOriginal(issue);
-            for (CustomField customField : issue.getCustomFields()) {
-                try {
-                    // Remove os caracteres do nome do campo: espaço, ( e )
-                    String methodName = customField.getName().replace(" ", "").replace("(", "").replace(")", "");
-                    Method setMethod = issueDTO.getClass().getMethod("set" + methodName, new Class[]{String.class});
-                    setMethod.invoke(issueDTO, new Object[]{customField.getValue()});
-                } catch (Exception ex) {
-                    Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            issueDTO = assebleDTO(issue);
             listIssues.add(issueDTO);
         }
         
         return listIssues;
+    }
+    
+    private IssueDTO assebleDTO(Issue issue) {
+        IssueDTO issueDTO = new IssueDTO();
+        issueDTO.setOriginal(issue);
+        for (CustomField customField : issue.getCustomFields()) {
+            try {
+                // Remove os caracteres do nome do campo: espaço, ( e )
+                String methodName = customField.getName().replace(" ", "").replace("(", "").replace(")", "");
+                Method setMethod = issueDTO.getClass().getMethod("set" + methodName, new Class[]{String.class});
+                setMethod.invoke(issueDTO, new Object[]{customField.getValue()});
+            } catch (Exception ex) {
+                Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return issueDTO;
     }
     
     /**
@@ -122,5 +127,36 @@ public class IssueServiceBean {
             totalPoints += (issue.getPointsRealizado() != null ? issue.getPointsRealizado() : 0);
         }
         return totalPoints;
+    }
+    
+    /**
+     * Conta a pontuação final das issues passadas, usando o atributo PointsRealizado
+     * @param issues
+     * @return A soma da pontuação de todas as issues
+     */
+    public Integer somaPontuacao(List<IssueDTO> issues, Date dataInicial) {
+        Integer totalPoints = 0;
+        for (IssueDTO issue : issues) {
+            Date storyDate = issue.getOriginal().getCreatedOn();
+            if (dataInicial.after(storyDate) || dataInicial.equals(storyDate)) {
+                totalPoints += (issue.getPointsRealizado() != null ? issue.getPointsRealizado() : 0);
+            }
+        }
+        return totalPoints;
+    }    
+
+    /**
+     * Retorna uma issue a partir do seu Id.
+     * 
+     * @param parentId
+     * @return 
+     */
+    private IssueDTO loadIssue(Integer parentId) {
+        try {
+            return assebleDTO(redmineService.getRedmineManager().getIssueById(parentId));
+        } catch (RedmineException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

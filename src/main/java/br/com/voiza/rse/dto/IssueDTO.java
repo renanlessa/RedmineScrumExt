@@ -11,6 +11,7 @@ public class IssueDTO {
     
     private Issue original;
     private Integer businessValue;
+    private Integer priority;
     private String storySize;
     private Integer pointsEstimado;
     private Integer pointsRealizado;
@@ -29,6 +30,12 @@ public class IssueDTO {
     public void setBusinessValue(String businessValue) {
         if (businessValue != null) {
             this.businessValue = Integer.parseInt(businessValue);
+        }
+    }
+    
+    public void setPriority(String priority) {
+        if (priority != null) {
+            this.priority = Integer.parseInt(priority);
         }
     }
 
@@ -104,6 +111,14 @@ public class IssueDTO {
 
     public void setUnplanned(boolean unplanned) {
         this.unplanned = unplanned;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 
     @Override

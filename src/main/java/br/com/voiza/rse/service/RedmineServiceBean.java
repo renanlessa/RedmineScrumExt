@@ -16,7 +16,7 @@ import javax.ejb.Singleton;
 @LocalBean
 public class RedmineServiceBean {
     
-    private static final String REDMINE_HOST_DEFAULT = "http://projetos.voiza.com.br";
+    private static final String REDMINE_HOST_DEFAULT = "https://projetos.voiza.com.br";
     private RedmineManager redmineManager;
     
     private static final Logger LOGGER = Logger.getLogger(RedmineServiceBean.class.getName());
