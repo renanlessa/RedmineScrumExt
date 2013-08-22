@@ -57,7 +57,7 @@ public class IssueServiceBean {
             
             List<Issue> list = new ArrayList<Issue>();
             
-            if (trackers != null) {
+            if (trackers != null && trackers.size() > 0) {
                 for (String trackerId : trackers) {
                     params.put("tracker_id", trackerId);
                     list.addAll(redmineService.getRedmineManager().getIssues(params));
