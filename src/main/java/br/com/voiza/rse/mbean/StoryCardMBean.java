@@ -2,6 +2,7 @@ package br.com.voiza.rse.mbean;
 
 import br.com.voiza.rse.dto.IssueDTO;
 import br.com.voiza.rse.service.IssueServiceBean;
+import br.com.voiza.rse.service.IssueStatusServiceBean;
 import br.com.voiza.rse.service.ProjectServiceBean;
 import br.com.voiza.rse.service.StoryCardReportServiceBean;
 import br.com.voiza.rse.service.TrackerServiceBean;
@@ -9,6 +10,7 @@ import br.com.voiza.rse.service.VersionServiceBean;
 import com.taskadapter.redmineapi.bean.Project;
 import com.taskadapter.redmineapi.bean.Tracker;
 import com.taskadapter.redmineapi.bean.Version;
+import com.taskadapter.redmineapi.bean.IssueStatus;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -33,31 +35,38 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
 
     @EJB
     private IssueServiceBean issueServiceBean;
-    
+
     @EJB
     private ProjectServiceBean projectServiceBean;
-    
+
     @EJB
     private VersionServiceBean versionServiceBean;
-    
+
     @EJB
     private TrackerServiceBean trackerServiceBean;
-    
+
+    @EJB
+    private IssueStatusServiceBean issueStatusServiceBean;
+
     @EJB
     private StoryCardReportServiceBean storyCardReportServiceBean;
-                
+
     private List<Project> listProjects = new ArrayList<Project>();
-    
+
     private List<Tracker> listTrackers = new ArrayList<Tracker>();
-    
+
     private List<Version> listVersions = new ArrayList<Version>();
 
     private List<IssueDTO> listIssues = new ArrayList<IssueDTO>();
-    
+
     private List<IssueDTO> selectedIssues = new ArrayList<IssueDTO>();
-    
+
     private List<String> selectedTrackers = new ArrayList<String>();
+
+    private List<IssueStatus> listIssueStatus = new ArrayList<IssueStatus>();
     
+    private List<String> selectedIssueStatus = new ArrayList<String>();
+
     private Integer projectId;
     
     private Integer versionId;
@@ -72,6 +81,7 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
     public void init() {
         loadProjects();
         loadTrackers();
+        loadIssueStatus();
     }
     
     /**
@@ -81,8 +91,18 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
         listProjects = projectServiceBean.loadProjects();
     }
     
+    /**
+     * Carrega os tracker para a lista listTrackers
+     */
     private void loadTrackers() {
         listTrackers = trackerServiceBean.loadTrackers();
+    }
+    
+    /**
+     * Carrega os status para a lista listIssueStatus
+     */
+    private void loadIssueStatus() {
+        listIssueStatus = issueStatusServiceBean.loadIssueStatus();
     }
     
     /**
@@ -97,7 +117,7 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
      */
     public void loadIssues() {
         listIssues.clear();
-        listIssues = issueServiceBean.loadIssues(projectId, versionId, selectedTrackers);
+        listIssues = issueServiceBean.loadIssues(projectId, versionId, selectedTrackers, selectedIssueStatus);
         totalPoints = issueServiceBean.somaPontuacao(listIssues);
         renderListagem = !listIssues.isEmpty();
         if (!renderListagem) {
@@ -211,5 +231,20 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
     public void setSelectedTrackers(List<String> selectedTrackers) {
         this.selectedTrackers = selectedTrackers;
     }
+
+    public List<IssueStatus> getListIssueStatus() {
+        return listIssueStatus;
+    }
+
+    public void setListIssueStatus(List<IssueStatus> listIssueStatus) {
+        this.listIssueStatus = listIssueStatus;
+    }
     
+    public List<String> getSelectedIssueStatus() {
+        return selectedIssueStatus;
+    }
+
+    public void setSelectedIssueStatus(List<String> selectedIssueStatus) {
+        this.selectedIssueStatus = selectedIssueStatus;
+    }
 }

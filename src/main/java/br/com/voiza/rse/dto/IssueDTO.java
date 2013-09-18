@@ -18,6 +18,7 @@ public class IssueDTO {
     private String issue;
     private boolean unplanned;
     private String requirements;
+    private String rank;
 
     public Issue getOriginal() {
         return original;
@@ -120,6 +121,14 @@ public class IssueDTO {
     public void setPriority(Integer priority) {
         this.priority = priority;
     }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }    
 
     @Override
     public String toString() {

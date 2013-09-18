@@ -10,19 +10,19 @@
     <ui:define name="contentTitle">
         Gerar Cartões de Estórias
     </ui:define>    
-    
+
     <ui:define name="content">
         <h:form id="form-cartoes">
             <p:panel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="Projeto: " />  
+                <h:panelGrid columns="4" cellpadding="5">
+                    <h:outputText value="Projeto: " />
                     <p:selectOneMenu value="#{storyCardMBean.projectId}">
-                        <f:selectItem itemLabel="Selecione o projeto..." itemValue="" />  
-                        <f:selectItems value="#{storyCardMBean.listProjects}" var="project" itemLabel="#{project.name}" itemValue="#{project.id}"/>  
-                        <p:ajax update="cmbVersions" listener="#{storyCardMBean.loadVersions}" />  
+                        <f:selectItem itemLabel="Selecione o projeto..." itemValue="" />
+                        <f:selectItems value="#{storyCardMBean.listProjects}" var="project" itemLabel="#{project.name}" itemValue="#{project.id}"/>
+                        <p:ajax update="cmbVersions" listener="#{storyCardMBean.loadVersions}" />
                     </p:selectOneMenu>
 
-                    <h:outputText value="Versão: " />  
+                    <h:outputText value="Versão: " />
                     <p:selectOneMenu value="#{storyCardMBean.versionId}" id="cmbVersions">  
                         <f:selectItem itemLabel="Selecione a versão..." itemValue="" />  
                         <f:selectItems value="#{storyCardMBean.listVersions}" var="version" itemLabel="#{version.name}" itemValue="#{version.id}"/>  
@@ -31,7 +31,13 @@
                     <h:outputText value="Tipo: " />  
                     <p:selectManyCheckbox value="#{storyCardMBean.selectedTrackers}" layout="pageDirection">  
                         <f:selectItems value="#{storyCardMBean.listTrackers}" var="tracker" itemLabel="#{tracker.name}" itemValue="#{tracker.id}" />  
-                    </p:selectManyCheckbox>  
+                    </p:selectManyCheckbox>
+                    
+                    <h:outputText value="Status: " />
+                    <p:selectManyCheckbox value="#{storyCardMBean.selectedIssueStatus}" layout="pageDirection">  
+                        <f:selectItems value="#{storyCardMBean.listIssueStatus}" var="issueStatus" itemLabel="#{issueStatus.name}" itemValue="#{issueStatus.id}" />
+                    </p:selectManyCheckbox>
+                    
                 </h:panelGrid>
                 
                 <f:facet name="footer">
@@ -45,18 +51,28 @@
                 <p:dataTable value="#{storyCardMBean.listIssues}" rowKey="#{issueDTO.original.id}" selection="#{storyCardMBean.selectedIssues}"
                              id="issues" var="issueDTO" sortBy="#{issueDTO.businessValue}" rendered="#{storyCardMBean.renderListagem}">
 
-                    <f:facet name="header">  
+                    <f:facet name="header">
                         Tarefas
-                    </f:facet>  
+                    </f:facet>
 
                     <p:column selectionMode="multiple" />
 
-                    <p:column headerText="#" sortBy="#{issueDTO.original.id}">  
-                        <h:outputText value="#{issueDTO.original.id}" />  
+                    <p:column headerText="#" sortBy="#{issueDTO.original.id}">
+                        <h:outputLink target="_blank" value="http://projetos.voiza.com.br/issues/#{issueDTO.original.id}">
+                            <h:outputLabel value="#{issueDTO.original.id}" />
+                        </h:outputLink>
                     </p:column>  
-
+                    
+                    <p:column headerText="Status" sortBy="#{issueDTO.original.statusName}">
+                        <h:outputText value="#{issueDTO.original.statusName}" />
+                    </p:column>
+                    
                     <p:column headerText="Business Value" sortBy="#{issueDTO.businessValue}">
                         <h:outputText value="#{issueDTO.businessValue}" />  
+                    </p:column>
+
+                    <p:column headerText="Rank" sortBy="#{issueDTO.rank}">
+                        <h:outputText value="#{issueDTO.rank != null ? issueDTO.rank : '-'}" />  
                     </p:column>  
 
                     <p:column headerText="Points">  

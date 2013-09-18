@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartoes" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="287" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="e059fdcd-5e9f-4cb9-9293-094490ea67fb">
-	<property name="ireport.zoom" value="2.1435888100000073"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.357947691000008"/>
+	<property name="ireport.x" value="26"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -9,12 +9,12 @@
 	<field name="storyType" class="java.lang.String"/>
 	<field name="storyId" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="realizedPoints" class="java.lang.Integer"/>
-	<field name="businessValue" class="java.lang.Integer"/>
 	<field name="storySize" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="rank" class="java.lang.String"/>
 	<field name="version" class="java.lang.String"/>
+	<field name="realizedPoints" class="java.lang.Integer"/>
+	<field name="businessValue" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -50,22 +50,6 @@
 				<textFieldExpression><![CDATA[$F{storyType} + " #" + $F{storyId}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="72e869c7-dcfc-40ba-a229-4c39e6200139" x="6" y="114" width="154" height="16"/>
-				<box leftPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Sans Mono" size="13" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Business Value: " + ($F{businessValue} != null ? $F{businessValue} : "?")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="a883b44d-0066-423f-9635-372669d85bee" x="6" y="98" width="234" height="16"/>
-				<box leftPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Sans Mono" size="13" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Realized Points: " + ($F{realizedPoints} != null ? $F{realizedPoints} : "?")]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="ae838070-eecb-459f-ab08-75d085a60f3e" x="6" y="25" width="273" height="28"/>
 				<box leftPadding="3">
 					<pen lineStyle="Dashed"/>
@@ -80,7 +64,7 @@
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="d4ebc347-95dd-4a17-8885-4a8ee59f5cc0" x="240" y="98" width="39" height="32"/>
+				<reportElement uuid="d4ebc347-95dd-4a17-8885-4a8ee59f5cc0" x="240" y="99" width="39" height="32"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans Mono" size="20" isBold="false"/>
 				</textElement>
@@ -101,12 +85,18 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0d8fcc29-c909-4491-814a-f1f7dc91f730" x="160" y="114" width="80" height="16"/>
-				<box leftPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Sans Mono" size="13" isBold="false"/>
+				<reportElement uuid="496daff8-3c8b-4640-ba54-88b56ee6a9e3" x="7" y="99" width="233" height="16"/>
+				<textElement>
+					<font fontName="DejaVu Sans Mono" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Rank: " + ($F{rank} != null ? $F{rank} : "-")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cc488f7c-6bb6-44ad-8bee-20aa4d2da277" x="7" y="115" width="233" height="16"/>
+				<textElement>
+					<font fontName="DejaVu Sans Mono" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Version: " + ($F{version} != null ? $F{version} : "-")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

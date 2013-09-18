@@ -1,3 +1,15 @@
+Version 1.4 - 
+- Adicionado parte da descrição da story no cartão;
+- Adicionado a informação Rank no cartão;
+- Alterado a informação do cartão de pontos estimados para pontos realizados;
+- Criado um cartão especifico para o projeto B2C Angeloni;
+- Adicionado link na coluna com nr do ticket na lista para impressão do cartão;
+- Adicionado coluna Rank na lista para impressão do cartão;
+
+Version 1.3 - 21/08/2013
+ - Adicionado filtro por Situação da tarefa na geração de cartões.
+ - Fix: Corrigido filtro para geração de cartões, no caso de não escolher o tipo do ticket retornará os tickets Story e Technical Story.
+
 Version 1.2 - 14/03/2013
  - Fix: Corrigido burndown para considerar como realizado somente se a data de finalização for a mesma da coluna do gráfico E se a situação for DONE.
  - Adicionadas classes SessionUtil e PropertiesUtil para carregar as informações do arquivo de properties.

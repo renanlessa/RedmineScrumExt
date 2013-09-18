@@ -32,14 +32,25 @@ public class StoryCardReportServiceBean {
     private static final String F_STORY_TYPE = "storyType";
     private static final String F_STORY_ID = "storyId";
     private static final String F_TITLE = "title";
-    private static final String F_ESTIMATED_POINTS = "estimatedPoints";
+    private static final String F_REALIZED_POINTS = "realizedPoints";
     private static final String F_BUSINESS_VALUE = "businessValue";
     private static final String F_STORY_SIZE = "storySize";
+    private static final String F_STORY_VERSION = "version";
+    private static final String F_STORY_RANK = "rank";
+    private static final String F_STORY_DESCRIPTION = "description";
+    private static final Integer COD_PROJECT_GESTAOECOMMERCE = 26;
     
     public byte[] buildReport(List<IssueDTO> selectedIssues) {
         try {
             ClassLoader classLoader = StoryCardMBean.class.getClassLoader();
-            InputStream jasperFile = classLoader.getResourceAsStream("br/com/voiza/rse/report/cartoes.jasper");
+            InputStream jasperFile = null;
+
+            if(selectedIssues.get(0).getOriginal().getProject().getId().equals(COD_PROJECT_GESTAOECOMMERCE)){
+                jasperFile = classLoader.getResourceAsStream("br/com/voiza/rse/report/cartoes_angeloni_b2c.jasper");
+            } else {
+                jasperFile = classLoader.getResourceAsStream("br/com/voiza/rse/report/cartoes.jasper");
+            }
+
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperFile);
             Collection<Map<String, ?>> dataSourceRoot = new ArrayList<Map<String, ?>>();
 
@@ -48,9 +59,12 @@ public class StoryCardReportServiceBean {
                 item.put(F_STORY_TYPE, issue.getOriginal().getTracker().getName());
                 item.put(F_STORY_ID, issue.getOriginal().getId());
                 item.put(F_TITLE, issue.getOriginal().getSubject());
-                item.put(F_ESTIMATED_POINTS, issue.getPointsRealizado());
+                item.put(F_REALIZED_POINTS, issue.getPointsRealizado());
                 item.put(F_BUSINESS_VALUE, issue.getBusinessValue());
                 item.put(F_STORY_SIZE, issue.getStorySize());
+                item.put(F_STORY_RANK, issue.getRank());
+                item.put(F_STORY_DESCRIPTION, issue.getOriginal().getDescription());
+                item.put(F_STORY_VERSION, issue.getOriginal().getTargetVersion().getName());
                 dataSourceRoot.add(item);
             }
 

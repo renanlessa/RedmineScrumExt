@@ -77,7 +77,7 @@ public class BurndownMBean {
      * Popula o modelo usado para geração do gráfico burndown
      */
     public void generateBurndownChart() {
-        List<IssueDTO> listIssues = issueServiceBean.loadIssues(projectId, versionId, null);
+        List<IssueDTO> listIssues = issueServiceBean.loadIssues(projectId, versionId, null, null);
         Integer initialPoints = issueServiceBean.somaPontuacao(listIssues, dataInicial);
         Double mediaEstimada = (initialPoints.doubleValue() / dias);
         Double previsto = initialPoints.doubleValue();

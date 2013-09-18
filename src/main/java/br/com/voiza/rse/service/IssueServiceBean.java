@@ -48,15 +48,31 @@ public class IssueServiceBean {
      * @param trackers Lista de tipos para filtrar. Caso seja null, carregará Story e Technical Story
      * @return List de IssueDTO contendo as issues localizadas
      */
-    public List<IssueDTO> loadIssues(Integer projectId, Integer versionId, List<String> trackers) {
+    /**
+     * Busca as issues de uma versão de um determinado projeto
+     * 
+     * @param projectId Projeto ao qual se deseja realizar a consulta
+     * @param versionId Versão à qual se deseja realizar a consulta
+     * @param trackers Lista de tipos para filtrar. Caso seja null, carregará Story e Technical Story
+     * @param issuesStatus Lista de status(situacao) para filtrar. Caso seja null, retorna todos os status
+     * @return List de IssueDTO contendo as issues localizadas
+     */
+    public List<IssueDTO> loadIssues(Integer projectId, Integer versionId, List<String> trackers, List<String> issuesStatus) {
         try {
             Map<String, String> params = new HashMap<String, String>();
-            params.put("project_id", projectId.toString());
-            params.put("status_id", "*");
+            params.put("project_id", projectId.toString());            
             params.put("fixed_version_id", versionId.toString());
-            
+
             List<Issue> list = new ArrayList<Issue>();
             
+            if (issuesStatus != null && issuesStatus.size() > 0) {
+                for (String issueStatusId : issuesStatus) {
+                    params.put("status_id", issueStatusId);
+                }
+            } else {
+                params.put("status_id", "*");
+            }
+
             if (trackers != null && trackers.size() > 0) {
                 for (String trackerId : trackers) {
                     params.put("tracker_id", trackerId);
@@ -75,7 +91,6 @@ public class IssueServiceBean {
         } catch (RedmineException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
-        
         return null;
     }
     
