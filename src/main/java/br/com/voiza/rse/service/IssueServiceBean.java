@@ -64,28 +64,36 @@ public class IssueServiceBean {
             params.put("fixed_version_id", versionId.toString());
 
             List<Issue> list = new ArrayList<Issue>();
-            
-            if (issuesStatus != null && issuesStatus.size() > 0) {
-                for (String issueStatusId : issuesStatus) {
-                    params.put("status_id", issueStatusId);
-                }
-            } else {
-                params.put("status_id", "*");
-            }
 
             if (trackers != null && trackers.size() > 0) {
                 for (String trackerId : trackers) {
                     params.put("tracker_id", trackerId);
+
+                    if (issuesStatus != null && issuesStatus.size() > 0) {
+                        for (String issueStatusId : issuesStatus) {
+                            params.put("status_id", issueStatusId);
+                            list.addAll(redmineService.getRedmineManager().getIssues(params));
+                        }
+                    } else {
+                        params.put("status_id", "*");
+                        list.addAll(redmineService.getRedmineManager().getIssues(params));
+                    }
+                }
+            } else if (issuesStatus != null && issuesStatus.size() > 0) {
+                for (String issueStatusId : issuesStatus) {
+                    params.put("status_id", issueStatusId);
+                    params.put("tracker_id", ID_TRACKER_STORY);
+                    list.addAll(redmineService.getRedmineManager().getIssues(params));
+                    params.put("tracker_id", ID_TRACKER_TECHNICAL_STORY);
                     list.addAll(redmineService.getRedmineManager().getIssues(params));
                 }
             } else {
                 params.put("tracker_id", ID_TRACKER_STORY);
                 list.addAll(redmineService.getRedmineManager().getIssues(params));
-                
                 params.put("tracker_id", ID_TRACKER_TECHNICAL_STORY);
                 list.addAll(redmineService.getRedmineManager().getIssues(params));
             }
-            
+
             List<IssueDTO> listIssues = montaListaIssueDTO(list);
             return listIssues;
         } catch (RedmineException ex) {
@@ -93,7 +101,7 @@ public class IssueServiceBean {
         }
         return null;
     }
-    
+
     /**
      * Popula uma lista de IssueDTO baseado em uma lista de Issue.
      * Esta ação é necessária para popular os campos personalizados do Redmine.
