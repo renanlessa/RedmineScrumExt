@@ -18,8 +18,11 @@ public class IssueDTO {
     private String issue;
     private boolean unplanned;
     private String requirements;
-    private String rank;
-
+    private String rank;    
+    private String storySizeReleasePlanning;
+    private String pointsReleasePlanning;
+    private String pointsSprintPlanning;
+        
     public Issue getOriginal() {
         return original;
     }
@@ -130,6 +133,30 @@ public class IssueDTO {
         this.rank = rank;
     }    
 
+    public String getStorySizeReleasePlanning() {
+        return storySizeReleasePlanning;
+    }
+
+    public void setStorySizeReleasePlanning(String storySizeReleasePlanning) {
+        this.storySizeReleasePlanning = storySizeReleasePlanning;
+    }
+
+    public String getPointsReleasePlanning() {
+        return pointsReleasePlanning;
+    }
+
+    public void setPointsReleasePlanning(String pointsReleasePlanning) {
+        this.pointsReleasePlanning = pointsReleasePlanning;
+    }
+
+    public String getPointsSprintPlanning() {
+        return pointsSprintPlanning;
+    }
+
+    public void setPointsSprintPlanning(String pointsSprintPlanning) {
+        this.pointsSprintPlanning = pointsSprintPlanning;
+    }
+
     @Override
     public String toString() {
         return "IssueDTO{" + "original=" + original.getId() 
@@ -137,5 +164,4 @@ public class IssueDTO {
                 + ", storySize=" + storySize 
                 + ", pointsRealizado=" + pointsRealizado + '}';
     }
-    
 }

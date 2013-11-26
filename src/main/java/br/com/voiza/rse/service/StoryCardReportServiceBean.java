@@ -32,9 +32,9 @@ public class StoryCardReportServiceBean {
     private static final String F_STORY_TYPE = "storyType";
     private static final String F_STORY_ID = "storyId";
     private static final String F_TITLE = "title";
-    private static final String F_REALIZED_POINTS = "realizedPoints";
+    private static final String F_SPRINT_PLAN_POINTS = "pointsSprintPlanning";
     private static final String F_BUSINESS_VALUE = "businessValue";
-    private static final String F_STORY_SIZE = "storySize";
+    private static final String F_STORY_SIZE_RELEASE_PLAN = "storySizeReleasePlanning";
     private static final String F_STORY_VERSION = "version";
     private static final String F_STORY_RANK = "rank";
     private static final String F_STORY_DESCRIPTION = "description";
@@ -59,9 +59,9 @@ public class StoryCardReportServiceBean {
                 item.put(F_STORY_TYPE, issue.getOriginal().getTracker().getName());
                 item.put(F_STORY_ID, issue.getOriginal().getId());
                 item.put(F_TITLE, issue.getOriginal().getSubject());
-                item.put(F_REALIZED_POINTS, issue.getPointsRealizado());
+                item.put(F_SPRINT_PLAN_POINTS, issue.getPointsSprintPlanning());
                 item.put(F_BUSINESS_VALUE, issue.getBusinessValue());
-                item.put(F_STORY_SIZE, issue.getStorySize());
+                item.put(F_STORY_SIZE_RELEASE_PLAN, issue.getStorySizeReleasePlanning());
                 item.put(F_STORY_RANK, issue.getRank());
                 item.put(F_STORY_DESCRIPTION, issue.getOriginal().getDescription());
                 item.put(F_STORY_VERSION, issue.getOriginal().getTargetVersion().getName());

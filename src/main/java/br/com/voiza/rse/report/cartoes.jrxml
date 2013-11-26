@@ -2,16 +2,16 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartoes" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="287" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="e059fdcd-5e9f-4cb9-9293-094490ea67fb">
 	<property name="ireport.zoom" value="2.1435888100000073"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="storyType" class="java.lang.String"/>
 	<field name="storyId" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="realizedPoints" class="java.lang.Integer"/>
+	<field name="pointsSprintPlanning" class="java.lang.String"/>
 	<field name="businessValue" class="java.lang.Integer"/>
-	<field name="storySize" class="java.lang.String"/>
+	<field name="storySizeReleasePlanning" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="rank" class="java.lang.String"/>
 	<field name="version" class="java.lang.String"/>
@@ -63,7 +63,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans Mono" size="13" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Realized Points: " + ($F{realizedPoints} != null ? $F{realizedPoints} : "?")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Sprint Points: " + ($F{pointsSprintPlanning} != null ? $F{pointsSprintPlanning} : "?")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ae838070-eecb-459f-ab08-75d085a60f3e" x="6" y="25" width="273" height="28"/>
@@ -79,12 +79,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="d4ebc347-95dd-4a17-8885-4a8ee59f5cc0" x="240" y="98" width="39" height="32"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans Mono" size="20" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{storySize}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{storySizeReleasePlanning}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="dcc3f1b4-8fa7-4c32-a6d7-3e8e282def1c" x="6" y="53" width="273" height="45"/>

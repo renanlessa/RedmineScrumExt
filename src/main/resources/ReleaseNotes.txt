@@ -1,4 +1,4 @@
-Version 1.4 - 
+Version 1.4 - 10/10/2013
 - Adicionado parte da descrição da story no cartão;
 - Adicionado a informação Rank no cartão;
 - Alterado a informação do cartão de pontos estimados para pontos realizados;
