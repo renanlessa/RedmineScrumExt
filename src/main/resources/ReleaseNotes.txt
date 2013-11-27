@@ -1,3 +1,8 @@
+Version 1.5 - DD/MM/YYYY
+- Alterado conteúdo da coluna Points da grid de visualização dos cartões, trocado de pointsRealizado por pointsSprintPlanning;
+- Alterado conteúdo da coluna StorySize da grid de visualização dos cartões, trocado de storySize por storySizeReleasePlanning;
+- Mesma alteração acima foi realizada na impressão dos cartões, alterado label Realized Points por Sprint Points;
+
 Version 1.4 - 10/10/2013
 - Adicionado parte da descrição da story no cartão;
 - Adicionado a informação Rank no cartão;
