@@ -129,6 +129,10 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
      * Realiza a impressão do PDF contendo os cartões.
      */
     public void printPDF() {
+        if(selectedIssues.isEmpty()) {
+            addErrorMessage("Selecione pelo menos um item abaixo");
+            return;
+        }
         byte[] pdf = storyCardReportServiceBean.buildReport(selectedIssues);
         try {
             StringBuilder nomeRel = new StringBuilder("Cartoes.pdf");

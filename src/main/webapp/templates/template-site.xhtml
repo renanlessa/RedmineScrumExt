@@ -9,11 +9,12 @@
 
     <ui:define name="top">
         Redmine Scrum Extension 
-        
-        <div id="header-user-data">
-            <h:outputText value="#{sessionMBean.user.fullName}" /> 
-            - <p:commandLink value="Sair" action="#{sessionMBean.logout()}" />
-        </div>
+        <h:form id="form-logout" style="width: auto; display: inline; padding: 5px;">
+            <div id="header-user-data">
+                <h:outputText value="#{sessionMBean.user.fullName}" /> 
+                - <p:commandLink value="Sair" action="#{sessionMBean.logout()}" />
+            </div>
+        </h:form>
     </ui:define>
 
     <ui:define name="menu">

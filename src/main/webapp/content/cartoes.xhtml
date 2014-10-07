@@ -49,7 +49,7 @@
             
             <p:outputPanel id="list">
                 <p:dataTable value="#{storyCardMBean.listIssues}" rowKey="#{issueDTO.original.id}" selection="#{storyCardMBean.selectedIssues}"
-                             id="issues" var="issueDTO" sortBy="#{issueDTO.businessValue}" rendered="#{storyCardMBean.renderListagem}" >
+                             id="issues" var="issueDTO" sortBy="#{issueDTO.businessValue}" rendered="#{storyCardMBean.renderListagem}">
 
                     <f:facet name="header">
                         Tarefas

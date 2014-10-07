@@ -38,18 +38,14 @@ public class StoryCardReportServiceBean {
     private static final String F_STORY_VERSION = "version";
     private static final String F_STORY_RANK = "rank";
     private static final String F_STORY_DESCRIPTION = "description";
-    private static final Integer COD_PROJECT_GESTAOECOMMERCE = 26;
+    //private static final Integer COD_PROJECT_GESTAOECOMMERCE = 26;
     
     public byte[] buildReport(List<IssueDTO> selectedIssues) {
         try {
             ClassLoader classLoader = StoryCardMBean.class.getClassLoader();
             InputStream jasperFile = null;
 
-            if(selectedIssues.get(0).getOriginal().getProject().getId().equals(COD_PROJECT_GESTAOECOMMERCE)){
-                jasperFile = classLoader.getResourceAsStream("br/com/voiza/rse/report/cartoes_angeloni_b2c.jasper");
-            } else {
-                jasperFile = classLoader.getResourceAsStream("br/com/voiza/rse/report/cartoes.jasper");
-            }
+            jasperFile = classLoader.getResourceAsStream("br/com/voiza/rse/report/cartoes.jasper");
 
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperFile);
             Collection<Map<String, ?>> dataSourceRoot = new ArrayList<Map<String, ?>>();

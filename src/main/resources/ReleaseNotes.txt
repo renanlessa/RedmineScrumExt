@@ -1,4 +1,9 @@
-Version 1.5 - DD/MM/YYYY
+Version 1.6 - 07/10/2014
+- Removido o cartão especifico para o projeto B2C Angeloni;
+- Alterada a utilização da api do redmine da versão 1.17 para versão 1.18;
+- Fix: Mostrar mensagem amigavel quando o usuário não selecionar nenhum registro ao clicar para gerar os cartões em PDF;
+
+Version 1.5 - 14/01/2014
 - Alterado conteúdo da coluna Points da grid de visualização dos cartões, trocado de pointsRealizado por pointsSprintPlanning;
 - Alterado conteúdo da coluna StorySize da grid de visualização dos cartões, trocado de storySize por storySizeReleasePlanning;
 - Mesma alteração acima foi realizada na impressão dos cartões, alterado label Realized Points por Sprint Points;
