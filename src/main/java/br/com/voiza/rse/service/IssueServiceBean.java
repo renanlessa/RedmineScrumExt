@@ -2,9 +2,11 @@ package br.com.voiza.rse.service;
 
 import br.com.voiza.rse.dto.IssueDTO;
 import br.com.voiza.rse.mbean.StoryCardMBean;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.CustomField;
 import com.taskadapter.redmineapi.bean.Issue;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,8 +30,8 @@ public class IssueServiceBean {
     @EJB
     private RedmineServiceBean redmineService;
     
-    private static String ID_TRACKER_STORY = "5";
-    private static String ID_TRACKER_TECHNICAL_STORY = "4";
+    private static final String ID_TRACKER_STORY = "5";
+    private static final String ID_TRACKER_TECHNICAL_STORY = "4";
     
     private static final Logger LOGGER = Logger.getLogger(IssueServiceBean.class.getName());
     
@@ -72,26 +74,27 @@ public class IssueServiceBean {
                     if (issuesStatus != null && issuesStatus.size() > 0) {
                         for (String issueStatusId : issuesStatus) {
                             params.put("status_id", issueStatusId);
-                            list.addAll(redmineService.getRedmineManager().getIssues(params));
+                            list.addAll(redmineService.getRedmineManager().getIssueManager().getIssues(params));
+                            //list.addAll(redmineService.getRedmineManager().getIssues(params));
                         }
                     } else {
                         params.put("status_id", "*");
-                        list.addAll(redmineService.getRedmineManager().getIssues(params));
+                        list.addAll(redmineService.getRedmineManager().getIssueManager().getIssues(params));
                     }
                 }
             } else if (issuesStatus != null && issuesStatus.size() > 0) {
                 for (String issueStatusId : issuesStatus) {
                     params.put("status_id", issueStatusId);
                     params.put("tracker_id", ID_TRACKER_STORY);
-                    list.addAll(redmineService.getRedmineManager().getIssues(params));
+                    list.addAll(redmineService.getRedmineManager().getIssueManager().getIssues(params));
                     params.put("tracker_id", ID_TRACKER_TECHNICAL_STORY);
-                    list.addAll(redmineService.getRedmineManager().getIssues(params));
+                    list.addAll(redmineService.getRedmineManager().getIssueManager().getIssues(params));
                 }
             } else {
                 params.put("tracker_id", ID_TRACKER_STORY);
-                list.addAll(redmineService.getRedmineManager().getIssues(params));
+                list.addAll(redmineService.getRedmineManager().getIssueManager().getIssues(params));
                 params.put("tracker_id", ID_TRACKER_TECHNICAL_STORY);
-                list.addAll(redmineService.getRedmineManager().getIssues(params));
+                list.addAll(redmineService.getRedmineManager().getIssueManager().getIssues(params));
             }
 
             List<IssueDTO> listIssues = montaListaIssueDTO(list);
@@ -132,7 +135,15 @@ public class IssueServiceBean {
                 String methodName = customField.getName().replace(" ", "").replace("(", "").replace(")", "");
                 Method setMethod = issueDTO.getClass().getMethod("set" + methodName, new Class[]{String.class});
                 setMethod.invoke(issueDTO, new Object[]{customField.getValue()});
-            } catch (Exception ex) {
+            } catch (NoSuchMethodException ex) {
+                Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
                 Logger.getLogger(StoryCardMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -144,10 +155,11 @@ public class IssueServiceBean {
      * @param issues
      * @return A soma da pontuação de todas as issues
      */
-    public Integer somaPontuacao(List<IssueDTO> issues) {
-        Integer totalPoints = 0;
+    public double somaPontuacao(List<IssueDTO> issues) {
+        double totalPoints = 0;
         for (IssueDTO issue : issues) {
-            totalPoints += (issue.getPointsRealizado() != null ? issue.getPointsRealizado() : 0);
+            if(issue.getPointsSprintPlanning() != null && !issue.getPointsSprintPlanning().equals("?"))
+                totalPoints += Double.parseDouble(issue.getPointsSprintPlanning());
         }
         return totalPoints;
     }
@@ -155,6 +167,7 @@ public class IssueServiceBean {
     /**
      * Conta a pontuação final das issues passadas, usando o atributo PointsRealizado
      * @param issues
+     * @param dataInicial
      * @return A soma da pontuação de todas as issues
      */
     public Integer somaPontuacao(List<IssueDTO> issues, Date dataInicial) {
@@ -176,7 +189,7 @@ public class IssueServiceBean {
      */
     private IssueDTO loadIssue(Integer parentId) {
         try {
-            return assebleDTO(redmineService.getRedmineManager().getIssueById(parentId));
+            return assebleDTO(redmineService.getRedmineManager().getIssueManager().getIssueById(parentId));
         } catch (RedmineException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }

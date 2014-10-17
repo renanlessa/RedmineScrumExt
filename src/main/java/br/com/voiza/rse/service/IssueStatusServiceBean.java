@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.voiza.rse.service;
 
 import com.taskadapter.redmineapi.RedmineException;
@@ -34,7 +30,7 @@ public class IssueStatusServiceBean {
      */
     public List<IssueStatus> loadIssueStatus() {
         try {
-            List<IssueStatus> status = redmineService.getRedmineManager().getStatuses();
+            List<IssueStatus> status = redmineService.getRedmineManager().getIssueManager().getStatuses();
             ordenaListaIssueStatus(status);
             return status;
         } catch (RedmineException ex) {
@@ -42,7 +38,7 @@ public class IssueStatusServiceBean {
         }
         return null;
     }
-    
+
     /**
      * Ordena a lista de Status pelo nome
      * @param list 

@@ -2,8 +2,6 @@ package br.com.voiza.rse.service;
 
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.Project;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,15 +24,15 @@ public class ProjectServiceBean {
     
     /**
      * Carrega os projetos relacionados ao usuário
+     * 
+     * @return List<Project> projects
      */
     public List<Project> loadProjects() {
         try {
-            return redmineService.getRedmineManager().getProjects();
+            return redmineService.getRedmineManager().getProjectManager().getProjects();
         } catch (RedmineException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         return null;
     }
- 
-    
 }

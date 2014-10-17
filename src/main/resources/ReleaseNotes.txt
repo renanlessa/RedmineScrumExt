@@ -1,3 +1,8 @@
+Version 1.7 - 17/10/2014
+- Alterada a utilização da api do redmine da versão 1.17 para versão 2.0.0;
+- Alterado para retornar as versões com status aberto na combo da transação de geração dos cartões;
+- Fix: Na listagem dos cartões mostrar o total de pontos da sprint ao lado do botão de Exportar;
+
 Version 1.6 - 07/10/2014
 - Removido o cartão especifico para o projeto B2C Angeloni;
 - Alterada a utilização da api do redmine da versão 1.17 para versão 1.18;

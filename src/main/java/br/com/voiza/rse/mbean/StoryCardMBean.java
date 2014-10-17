@@ -71,7 +71,7 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
     
     private Integer versionId;
     
-    private Integer totalPoints;
+    private double totalPoints;
     
     private boolean renderListagem;
     
@@ -204,11 +204,11 @@ public class StoryCardMBean extends SuperMBean implements Serializable {
         this.selectedIssues = selectedIssues;
     }
 
-    public Integer getTotalPoints() {
+    public double getTotalPoints() {
         return totalPoints;
     }
 
-    public void setTotalPoints(Integer totalPoints) {
+    public void setTotalPoints(double totalPoints) {
         this.totalPoints = totalPoints;
     }
 

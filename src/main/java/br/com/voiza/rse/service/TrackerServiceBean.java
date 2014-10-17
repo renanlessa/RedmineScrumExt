@@ -2,7 +2,6 @@ package br.com.voiza.rse.service;
 
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.Tracker;
-import com.taskadapter.redmineapi.bean.Version;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,13 +30,12 @@ public class TrackerServiceBean {
      */
     public List<Tracker> loadTrackers() {
         try {
-            List<Tracker> trackers = redmineService.getRedmineManager().getTrackers();
+            List<Tracker> trackers = redmineService.getRedmineManager().getIssueManager().getTrackers();
             ordenaListaTrackers(trackers);
             return trackers;
         } catch (RedmineException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
-
         return null;
     }
 
