@@ -22,7 +22,25 @@ public class IssueDTO {
     private String storySizeReleasePlanning;
     private String pointsReleasePlanning;
     private String pointsSprintPlanning;
-        
+    private String bugPhase;
+    private String bugType;
+
+    public String getBugPhase() {
+        return bugPhase;
+    }
+
+    public void setBugPhase(String bugPhase) {
+        this.bugPhase = bugPhase;
+    }
+
+    public String getBugType() {
+        return bugType;
+    }
+
+    public void setBugType(String bugType) {
+        this.bugType = bugType;
+    }
+
     public Issue getOriginal() {
         return original;
     }
