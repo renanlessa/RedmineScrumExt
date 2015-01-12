@@ -55,9 +55,9 @@ public class StoryCardReportServiceBean {
                 item.put(F_STORY_TYPE, issue.getOriginal().getTracker().getName());
                 item.put(F_STORY_ID, issue.getOriginal().getId());
                 item.put(F_TITLE, issue.getOriginal().getSubject());
-                item.put(F_SPRINT_PLAN_POINTS, issue.getPointsSprintPlanning());
+                item.put(F_SPRINT_PLAN_POINTS, issue.getStoryPoints());
                 item.put(F_BUSINESS_VALUE, issue.getBusinessValue());
-                item.put(F_STORY_SIZE_RELEASE_PLAN, issue.getStorySizeReleasePlanning());
+                item.put(F_STORY_SIZE_RELEASE_PLAN, issue.getStorySize());
                 item.put(F_STORY_RANK, issue.getRank());
                 item.put(F_STORY_DESCRIPTION, issue.getOriginal().getDescription());
                 item.put(F_STORY_VERSION, issue.getOriginal().getTargetVersion().getName());

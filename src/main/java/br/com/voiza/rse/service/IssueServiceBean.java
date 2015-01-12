@@ -2,7 +2,6 @@ package br.com.voiza.rse.service;
 
 import br.com.voiza.rse.dto.IssueDTO;
 import br.com.voiza.rse.mbean.StoryCardMBean;
-import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.bean.CustomField;
 import com.taskadapter.redmineapi.bean.Issue;
@@ -158,8 +157,8 @@ public class IssueServiceBean {
     public double somaPontuacao(List<IssueDTO> issues) {
         double totalPoints = 0;
         for (IssueDTO issue : issues) {
-            if(issue.getPointsSprintPlanning() != null && !issue.getPointsSprintPlanning().equals("?"))
-                totalPoints += Double.parseDouble(issue.getPointsSprintPlanning());
+            if(issue.getStoryPoints()!= null && !issue.getStoryPoints().equals("?"))
+                totalPoints += Double.parseDouble(issue.getStoryPoints());
         }
         return totalPoints;
     }

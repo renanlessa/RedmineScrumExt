@@ -76,7 +76,7 @@
                     </p:column>  
 
                     <p:column headerText="Points">
-                        <h:outputText value="#{issueDTO.pointsSprintPlanning != null ? issueDTO.pointsSprintPlanning : '?'}" />
+                        <h:outputText value="#{issueDTO.storyPoints != null ? issueDTO.storyPoints : '?'}" />
                     </p:column>
 
                     <p:column headerText="Título">  
@@ -84,7 +84,7 @@
                     </p:column>  
 
                     <p:column headerText="Story Size">  
-                        <h:outputText value="#{issueDTO.storySizeReleasePlanning}" />  
+                        <h:outputText value="#{issueDTO.storySize}" />  
                     </p:column>
 
                     <f:facet name="footer">  
