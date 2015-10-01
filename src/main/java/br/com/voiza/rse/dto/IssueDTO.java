@@ -25,6 +25,7 @@ public class IssueDTO {
     private String bugPhase;
     private String bugType;
     private String storyPoints;
+    private String bugStage;
 
     public String getBugPhase() {
         return bugPhase;
@@ -182,6 +183,14 @@ public class IssueDTO {
 
     public void setStoryPoints(String storyPoints) {
         this.storyPoints = storyPoints;
+    }
+
+    public String getBugStage() {
+        return bugStage;
+    }
+
+    public void setBugStage(String bugStage) {
+        this.bugStage = bugStage;
     }
 
     @Override
